@@ -1,4 +1,4 @@
-# esp32_beehive
+# ESP32 beehive (WiFi version)
 Beehives online monitoring based on the ESP32 and others sensors. WiFi version.
 
 > To build a project, you need to download all the necessary libraries and create the *settings.cpp* file in the *src* folder:
