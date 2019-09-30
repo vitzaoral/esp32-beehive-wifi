@@ -1,16 +1,17 @@
-# esp32_beehive
-Beehives online monitoring based on the ESP32, SIM800L and others sensors.
+# ESP32 beehive (WiFi version)
+Beehives online monitoring based on the ESP32 and others sensors. WiFi version.
 
 > To build a project, you need to download all the necessary libraries and create the *settings.cpp* file in the *src* folder:
 ```c++
 // Project settings
 struct Settings
 {
-    const char *blynkAuth = "You Blynk Auth";
+    const char *wifiSSID = "YYY";
+    const char *wifiPassword = "ZZZ";
+    const char *imageUploadScriptUrl = "http://example.com/upload.php";
     const char *version = "1.0.0";
-    const char *firmawareUrlBase = "http://your-address.com/";
-    const char *firmwareFileName = "bee_hive";
-    const char *firmwareVersionFileName = ".version";
+    const char *firmwareVersionUrl = "http://example.com/version.txt";
+    const char *firmwareBinUrl = "http://example.com/firmware.bin";
 };
 ```
 
