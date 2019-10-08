@@ -22,7 +22,7 @@ struct Settings
 
 ### Schema:
 TODO
-![Schema](https://github.com/vitzaoral/esp32_beehive/blob/master/schema/schema.png)
+![Schema](https://github.com/vitzaoral/esp32-beehive-wifi/blob/master/schema/schema.png)
 
 ### Powering:
 3v3 regulator - https://randomnerdtutorials.com/esp8266-voltage-regulator-lipo-and-li-ion-batteries/
