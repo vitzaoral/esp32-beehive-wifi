@@ -257,10 +257,17 @@ bool InternetConnection::initializeConnection()
         connAttempts++;
     }
 
+    delay(1000);
+
     Serial.println("\r\nConnecting to WIFI OK, connnecting to Blynk");
-    Blynk.config(settings.blynkAuth);
-    // timeout 3sec
-    Blynk.connect(1000);
+
+    if (!Blynk.connected())
+    {
+        Blynk.config(settings.blynkAuth);
+        // timeout 6sec
+        Blynk.connect(2000);
+    }
+
     return Blynk.connected();
 }
 
@@ -319,9 +326,9 @@ void InternetConnection::sendDataToBlynk(
         Blynk.virtualWrite(V10, powerController.sensor_solar.power_mW);
 
         // battery power data
-        Blynk.virtualWrite(V41, powerController.sensor_solar.loadVoltage);
-        Blynk.virtualWrite(V42, powerController.sensor_solar.current_mA);
-        Blynk.virtualWrite(V43, powerController.sensor_solar.power_mW);
+        Blynk.virtualWrite(V41, powerController.sensor_battery.loadVoltage);
+        Blynk.virtualWrite(V42, powerController.sensor_battery.current_mA);
+        Blynk.virtualWrite(V43, powerController.sensor_battery.power_mW);
 
         // setup signal quality decription
         getSignalQualityDescription(V11, signalQuality);

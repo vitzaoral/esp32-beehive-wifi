@@ -10,7 +10,7 @@ PowerController::PowerController()
     ina219_solar.setCalibration_32V_2A();
 
     ina219_battery.begin();
-    ina219_battery.setCalibration_16V_400mA();
+    ina219_battery.setCalibration_32V_2A();
 }
 
 void PowerController::setData()
@@ -18,7 +18,7 @@ void PowerController::setData()
     Serial.println("Solar sensor:");
     setData(ina219_solar, &sensor_solar);
 
-    Serial.println("Solar battery:");
+    Serial.println("12V battery sensor:");
     setData(ina219_battery, &sensor_battery);
 }
 

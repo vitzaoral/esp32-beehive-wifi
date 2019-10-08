@@ -22,7 +22,7 @@ void checkIncomingCall();
 void checkGyroscopeAlarm();
 void checkMagneticLockAlarm();
 
-Ticker timerSendDataToInternet(sendDataToInternet, 288000);  // 4.8 min 300000
+Ticker timerSendDataToInternet(sendDataToInternet, 288000);  // 4.8 min 288000
 Ticker timerCheckIncomingCall(checkIncomingCall, 5125);      // 5 sec
 Ticker timerGyroscopeAlarm(checkGyroscopeAlarm, 5321);       // 5 sec
 Ticker timerMagneticLockAlarm(checkMagneticLockAlarm, 4321); // 4 sec
@@ -91,6 +91,7 @@ void sendDataToInternet()
   else
   {
     Serial.println("No internet/blynk connection");
+    connection.disconnect();
   }
 }
 
