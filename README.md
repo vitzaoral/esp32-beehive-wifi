@@ -21,7 +21,6 @@ struct Settings
 * TODO
 
 ### Schema:
-TODO
 ![Schema](https://github.com/vitzaoral/esp32-beehive-wifi/blob/master/schema/schema.png)
 
 ### Powering:

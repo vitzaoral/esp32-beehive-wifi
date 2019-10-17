@@ -1,8 +1,7 @@
 #include <Arduino.h>
 #include <InternetConnection.h>
 #include <Ticker.h>
-
-// funkcni verze TinyGSM 0.3.6, 0.6.2 delala bordel
+#include "esp32-hal-cpu.h"
 
 // cervenby S09 start 13.2. v 21:30 - 14.2. 23:30 - 26 hodin
 // DD0503MA start 15.2. 7:30 - 16.2. 13:45 - 30 hodin
@@ -34,9 +33,16 @@ Ticker timerSendDataToBlynkIfAlarm(sendDataToBlynkIfAlarm, 20000); // 20 sec
 // TODO: sound level measuring
 // TODO: mic switchinng
 
+// TODO: podpora 5.1V z baterky a modemu -> voltage divider 4.7kΩ a 22kΩ, zere pak 191uA https://electronics.stackexchange.com/questions/404230/do-voltage-dividers-waste-battery
+// https://github.com/stephaneAG/SIM800L/blob/master/README.md
+
 void setup()
 {
   Serial.begin(115200);
+
+  // save battery, setup lower CPU frequency (default is 240Mhz)
+  setCpuFrequencyMhz(80);
+  Serial.println("Get CPU Frequency: " + String(getCpuFrequencyMhz()) + "Mhz");
 
   connection.initialize();
 

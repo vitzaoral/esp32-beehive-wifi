@@ -243,6 +243,9 @@ bool InternetConnection::initializeConnection()
     int connAttempts = 0;
     Serial.println("\r\nTry connecting to: " + String(settings.wifiSSID));
 
+    //save battery power, set lowest WiFi power
+    WiFi.setTxPower(WIFI_POWER_MINUS_1dBm);
+
     WiFi.begin(settings.wifiSSID, settings.wifiPassword);
     while (WiFi.status() != WL_CONNECTED)
     {
