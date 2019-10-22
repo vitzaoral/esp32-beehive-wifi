@@ -245,6 +245,10 @@ bool InternetConnection::initializeConnection()
 
     //save battery power, set lowest WiFi power
     WiFi.setTxPower(WIFI_POWER_MINUS_1dBm);
+    delay(1);
+
+    // try config - quicker for WiFi connection
+    WiFi.config(settings.ip, settings.gateway, settings.subnet, settings.gateway);
 
     WiFi.begin(settings.wifiSSID, settings.wifiPassword);
     while (WiFi.status() != WL_CONNECTED)
@@ -285,7 +289,7 @@ void InternetConnection::disconnect()
         }
 
         Blynk.disconnect();
-        WiFi.disconnect();
+        WiFi.disconnect(true);
 
         Serial.println("Disconnected OK");
     }
@@ -358,7 +362,7 @@ void InternetConnection::sendDataToBlynk(
         setAlarmInfoToBlynk();
 
         // WIFI info
-        Blynk.virtualWrite(V39, WiFi.localIP().toString());
+        Blynk.virtualWrite(V39, "IP: " + WiFi.localIP().toString() + "|G: " + WiFi.gatewayIP().toString() + "|S: " + WiFi.subnetMask().toString() + "|DNS: " + WiFi.dnsIP().toString());
         Blynk.virtualWrite(V40, WiFi.RSSI());
 
         Serial.println("Sending data to Blynk - DONE");
