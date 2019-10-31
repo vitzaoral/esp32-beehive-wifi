@@ -19,11 +19,20 @@ struct Settings
     IPAddress subnet = IPAddress(255, 255, 255, 0);
 };
 ```
+### Features
+* TODO
 
 ### Currents list:
 
 * [ESP32 WROOM-32](https://www.aliexpress.com/item/ESP32-ESP-32-ESP32S-ESP-32S-CP2102-Wireless-WiFi-Bluetooth-Development-Board-Micro-USB-Dual-Core/32867696371.html)
-* TODO
+* [MMA8452 Triaxial Accelerometer](https://www.aliexpress.com/item/2038557878.html)
+* [SHT30 digital temperature/humidity sensor](https://www.aliexpress.com/item/32962846003.html)
+* [BMP280 digital temperature/humidity/pressure sensor](https://www.aliexpress.com/item/32849462236.html)
+* [SIM 800L module](https://www.aliexpress.com/item/32671921426.html)
+* [MAX4466 microphone](https://www.aliexpress.com/item/32757294757.html)
+* [INA219 sensor](https://www.aliexpress.com/item/32846796535.html)
+* [Magnetic contact sensor](https://www.aliexpress.com/item/32840447389.html)
+* Solar panel 18V with battery and solar charger or other power supply
 
 ### Save battery power:
 * Set CPU frequency to 30% (80Mhz) - *setCpuFrequencyMhz(80);*
