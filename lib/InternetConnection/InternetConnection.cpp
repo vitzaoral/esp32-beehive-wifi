@@ -255,7 +255,7 @@ bool InternetConnection::initializeConnection()
     {
         delay(500);
         Serial.print(".");
-        if (connAttempts > 10)
+        if (connAttempts > 20)
         {
             Serial.println("Error - couldn't connect to WIFI");
             return false;

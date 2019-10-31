@@ -40,6 +40,8 @@ void MeteoData::initializeSensors()
 
 void MeteoData::setData()
 {
+    int delayTime = 10;
+
     Serial.print("Outdoor sensor: ");
     sensorOutdoor.temperature = bme.readTemperature();
     sensorOutdoor.humidity = bme.readHumidity();
@@ -47,16 +49,19 @@ void MeteoData::setData()
     MeteoData::printSensorData(&sensorOutdoor);
 
     digitalWrite(SENSOR_A_PIN, LOW); // 0x44
+    delay(delayTime);
     Serial.print("Sensor A :");
     MeteoData::setSensorData(&sensorA);
     digitalWrite(SENSOR_A_PIN, HIGH); // 0x45
 
     digitalWrite(SENSOR_B_PIN, LOW); // 0x44
+    delay(delayTime);
     Serial.print("Sensor B :");
     MeteoData::setSensorData(&sensorB);
     digitalWrite(SENSOR_B_PIN, HIGH); // 0x45
 
     digitalWrite(SENSOR_C_PIN, LOW); // 0x44
+    delay(delayTime);
     Serial.print("Sensor C :");
     MeteoData::setSensorData(&sensorC);
     digitalWrite(SENSOR_C_PIN, HIGH); // 0x45
