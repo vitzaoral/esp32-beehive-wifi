@@ -2,6 +2,10 @@
 #include <BlynkSimpleEsp32.h>
 #include "../../src/settings.cpp"
 
+// hard reset
+#include <esp_int_wdt.h>
+#include <esp_task_wdt.h>
+
 // SIM800L -> ESP32 wiring to UART2
 // SIM800L RX -> ESP32 TX2
 // SIM800L TX -> ESP32 RX2
@@ -627,7 +631,13 @@ void InternetConnection::checkNewVersionAndUpdate()
     http.end();
     Serial.println("Restart after OTA, bye");
     delay(1000);
-    ESP.restart();
+
+    // hard reset
+    esp_task_wdt_init(1, true);
+    esp_task_wdt_add(NULL);
+    while (true)
+        ;
+    //ESP.restart();
 }
 
 void InternetConnection::updateFirmware()

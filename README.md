@@ -20,7 +20,11 @@ struct Settings
 };
 ```
 ### Features
-* TODO
+* measuring the temperature and humidity inside the hive
+measuring the temperature, humidity and pressure outside the hive
+* triggers an alarm (SMS/call/notification) when someone opens the hive - gyroscope sensor
+* triggers an alarm (SMS / call / notification) when someone picks up the hive - a magnetic contact sensor
+* audio transmission via SMI800L - mobile phone call
 
 ### Currents list:
 
@@ -43,14 +47,5 @@ struct Settings
 ### Schema:
 ![Schema](https://github.com/vitzaoral/esp32-beehive-wifi/blob/master/schema/schema.png)
 
-### Powering:
+### Powering 5V -> 3.3V:
 3v3 regulator - https://randomnerdtutorials.com/esp8266-voltage-regulator-lipo-and-li-ion-batteries/
-
-### GMS antenna interferes with I2C bus communication:
-TODO - https://electronics.stackexchange.com/questions/36906/radio-interferes-with-i2c-bus-communication
-
-### PCB circuit:
-* TODO
-
-### Blynk:
-* TODO
