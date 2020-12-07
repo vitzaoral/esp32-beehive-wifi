@@ -40,7 +40,7 @@ void MeteoData::initializeSensors()
 
 void MeteoData::setData()
 {
-    int delayTime = 10;
+    int delayTime = 300;
 
     Serial.print("Outdoor sensor: ");
     sensorOutdoor.temperature = bme.readTemperature();
