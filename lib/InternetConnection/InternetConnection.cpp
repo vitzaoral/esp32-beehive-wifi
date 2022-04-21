@@ -11,12 +11,12 @@
 // SIM800L TX -> ESP32 RX2
 
 // Hardware Serial - UART2
-HardwareSerial gsmSerial(2);
+//HardwareSerial gsmSerial(2);
 
 Settings settings;
 
 // variables for HTTP access
-TinyGsm modem(gsmSerial);
+//TinyGsm modem(gsmSerial);
 
 // HTTP Clients for OTA over WiFi
 WiFiClient client;
@@ -25,7 +25,7 @@ WiFiClient client;
 WidgetTerminal terminal(V36);
 
 // Siren alarm controller
-SirenController sirenController;
+//SirenController sirenController;
 
 // OTA - firmware file name for OTA update on the SPIFFS
 const char firmwareFile[] = "/firmware.bin";
@@ -162,85 +162,85 @@ void InternetConnection::initialize()
     pinMode(MICROPHONE_C_PIN, OUTPUT);
 
     pinMode(MODEM_RESET_PIN, OUTPUT);
-    restartModem();
+    //restartModem();
 
     // true if is actual alarm - run Blynk.run
     isAlarm = false;
 }
 
-void InternetConnection::restartModem()
-{
-    Serial.println("Restarting modem");
-    delay(1000);
-    digitalWrite(MODEM_RESET_PIN, HIGH);
-    delay(400);
-    digitalWrite(MODEM_RESET_PIN, LOW);
-    delay(400);
+// void InternetConnection::restartModem()
+// {
+//     Serial.println("Restarting modem");
+//     delay(1000);
+//     digitalWrite(MODEM_RESET_PIN, HIGH);
+//     delay(400);
+//     digitalWrite(MODEM_RESET_PIN, LOW);
+//     delay(400);
 
-    Serial.println("Restarting modem - initial serial, factory default");
-    // Set GSM module baud rate
-    gsmSerial.begin(115200, SERIAL_8N1, 16, 17, false);
-    modem.factoryDefault();
+//     Serial.println("Restarting modem - initial serial, factory default");
+//     // Set GSM module baud rate
+//     gsmSerial.begin(115200, SERIAL_8N1, 16, 17, false);
+//     modem.factoryDefault();
 
-    Serial.println("Restarting modem - doing restart");
+//     Serial.println("Restarting modem - doing restart");
 
-    if (!modem.restart())
-    {
-        Serial.println("Modem FAILED");
-        modemReady = false;
-    }
-    else
-    {
-        Serial.println("Modem restart OK");
-        modemReady = true;
-        Serial.println("Modem info: " + modem.getModemInfo());
-    }
-}
+//     if (!modem.restart())
+//     {
+//         Serial.println("Modem FAILED");
+//         modemReady = false;
+//     }
+//     else
+//     {
+//         Serial.println("Modem restart OK");
+//         modemReady = true;
+//         Serial.println("Modem info: " + modem.getModemInfo());
+//     }
+// }
 
-void InternetConnection::checkIncomingCall()
-{
-    if (modemReady)
-    {
-        if (modem.callAnswer())
-        {
-            Serial.println("*** INCOMING CALL ***");
-            processIncomingCall();
-        }
-    }
-    else
-    {
-        Serial.println("Incomming call - modem not ready");
-    }
-}
+// void InternetConnection::checkIncomingCall()
+// {
+//     if (modemReady)
+//     {
+//         if (modem.callAnswer())
+//         {
+//             Serial.println("*** INCOMING CALL ***");
+//             processIncomingCall();
+//         }
+//     }
+//     else
+//     {
+//         Serial.println("Incomming call - modem not ready");
+//     }
+// }
 
-void InternetConnection::processIncomingCall()
-{
-    int callTime = 30000;
-    // int pauseTime = 100;
+// void InternetConnection::processIncomingCall()
+// {
+//     int callTime = 30000;
+//     // int pauseTime = 100;
 
-    Serial.println("Microphone A on");
-    digitalWrite(MICROPHONE_A_PIN, HIGH);
-    delay(callTime);
-    digitalWrite(MICROPHONE_A_PIN, LOW);
-    // modem.dtmfSend('A', 1000);
-    // delay(pauseTime);
+//     Serial.println("Microphone A on");
+//     digitalWrite(MICROPHONE_A_PIN, HIGH);
+//     delay(callTime);
+//     digitalWrite(MICROPHONE_A_PIN, LOW);
+//     // modem.dtmfSend('A', 1000);
+//     // delay(pauseTime);
 
-    // TODO: switching microphones
-    // Serial.println("Microphone B on");
-    // digitalWrite(MICROPHONE_B_PIN, HIGH);
-    // delay(60000);
-    // digitalWrite(MICROPHONE_B_PIN, LOW);
-    // modem.dtmfSend('A', 1000);
-    // delay(pauseTime);
+//     // TODO: switching microphones
+//     // Serial.println("Microphone B on");
+//     // digitalWrite(MICROPHONE_B_PIN, HIGH);
+//     // delay(60000);
+//     // digitalWrite(MICROPHONE_B_PIN, LOW);
+//     // modem.dtmfSend('A', 1000);
+//     // delay(pauseTime);
 
-    // Serial.println("Microphone C on");
-    // digitalWrite(MICROPHONE_C_PIN, HIGH);
-    // delay(callTime);
-    // digitalWrite(MICROPHONE_C_PIN, LOW);
+//     // Serial.println("Microphone C on");
+//     // digitalWrite(MICROPHONE_C_PIN, HIGH);
+//     // delay(callTime);
+//     // digitalWrite(MICROPHONE_C_PIN, LOW);
 
-    Serial.println("*** BYE BYE ***");
-    modem.callHangup();
-}
+//     Serial.println("*** BYE BYE ***");
+//     modem.callHangup();
+// }
 
 bool InternetConnection::initializeConnection()
 {
@@ -309,27 +309,31 @@ void InternetConnection::disconnect()
 void InternetConnection::sendDataToBlynk(
     MeteoData meteoData,
     PowerController powerController,
-    GyroscopeController gyroscopeController,
+    //GyroscopeController gyroscopeController,
     MagneticLockController magneticLockController)
 {
     // create data to send to Blynk
     if (Blynk.connected())
     {
-        int signalQuality = modem.getSignalQuality();
-        Blynk.virtualWrite(V1, signalQuality);
+        //int signalQuality = modem.getSignalQuality();
+        //Blynk.virtualWrite(V1, signalQuality);
 
         // battery data
-        Blynk.virtualWrite(V2, modem.getBattPercent());
-        float battVoltage = modem.getBattVoltage() / 1000.0F;
-        Blynk.virtualWrite(V3, battVoltage);
+        // Blynk.virtualWrite(V2, modem.getBattPercent());
+        // float battVoltage = modem.getBattVoltage() / 1000.0F;
+        // Blynk.virtualWrite(V3, battVoltage);
 
         // meteo data A
-        Blynk.virtualWrite(V4, meteoData.sensorA.humidity);
-        Blynk.virtualWrite(V5, meteoData.sensorA.temperature);
+        // Blynk.virtualWrite(V4, meteoData.sensorA.humidity);
+        // Blynk.virtualWrite(V5, meteoData.sensorA.temperature);
 
         // meteo data B
-        Blynk.virtualWrite(V6, meteoData.sensorB.humidity);
-        Blynk.virtualWrite(V7, meteoData.sensorB.temperature);
+        // Blynk.virtualWrite(V6, meteoData.sensorB.humidity);
+        // Blynk.virtualWrite(V7, meteoData.sensorB.temperature);
+
+        // meteo data C
+        // Blynk.virtualWrite(V12, meteoData.sensorC.humidity);
+        // Blynk.virtualWrite(V13, meteoData.sensorC.temperature);
 
         // solar power data
         Blynk.virtualWrite(V8, powerController.sensor_solar.loadVoltage);
@@ -342,14 +346,10 @@ void InternetConnection::sendDataToBlynk(
         Blynk.virtualWrite(V43, powerController.sensor_battery.power_mW);
 
         // setup signal quality decription
-        getSignalQualityDescription(V11, signalQuality);
-
-        // meteo data C
-        Blynk.virtualWrite(V12, meteoData.sensorC.humidity);
-        Blynk.virtualWrite(V13, meteoData.sensorC.temperature);
+        //getSignalQualityDescription(V11, signalQuality);
 
         // gyroscope data
-        setGyroscopeControllerDataToBlynk(gyroscopeController);
+        //setGyroscopeControllerDataToBlynk(gyroscopeController);
 
         // set SDA/SCL status
         setI2CStatusVersion();
@@ -390,19 +390,19 @@ void InternetConnection::setI2CStatusVersion()
     Blynk.virtualWrite(V17, message);
 }
 
-void InternetConnection::setGyroscopeControllerDataToBlynk(GyroscopeController gyroscopeController)
-{
-    Blynk.virtualWrite(V14, gyroscopeController.sensorA.orientation);
-    setAlarmCollor(V14, gyroscopeController.sensorA.isOk);
+// void InternetConnection::setGyroscopeControllerDataToBlynk(GyroscopeController gyroscopeController)
+// {
+//     Blynk.virtualWrite(V14, gyroscopeController.sensorA.orientation);
+//     setAlarmCollor(V14, gyroscopeController.sensorA.isOk);
 
-    Blynk.virtualWrite(V15, gyroscopeController.sensorB.orientation);
-    setAlarmCollor(V15, gyroscopeController.sensorB.isOk);
+//     Blynk.virtualWrite(V15, gyroscopeController.sensorB.orientation);
+//     setAlarmCollor(V15, gyroscopeController.sensorB.isOk);
 
-    Blynk.virtualWrite(V16, gyroscopeController.sensorC.orientation);
-    setAlarmCollor(V16, gyroscopeController.sensorC.isOk);
+//     Blynk.virtualWrite(V16, gyroscopeController.sensorC.orientation);
+//     setAlarmCollor(V16, gyroscopeController.sensorC.isOk);
 
-    setAlarmInfoToBlynk();
-}
+//     setAlarmInfoToBlynk();
+// }
 
 void InternetConnection::setMagneticLockControllerDataToBlynk(MagneticLockController magneticLockController)
 {
@@ -498,19 +498,19 @@ void InternetConnection::setMagneticLockControllerDataToBlynkIfAlarm(MagneticLoc
     }
 }
 
-void InternetConnection::setGyroscopeControllerDataToBlynkIfAlarm(GyroscopeController gyroscopeController)
-{
-    if (isAlarm)
-    {
-        setGyroscopeControllerDataToBlynk(gyroscopeController);
-    }
-}
+// void InternetConnection::setGyroscopeControllerDataToBlynkIfAlarm(GyroscopeController gyroscopeController)
+// {
+//     if (isAlarm)
+//     {
+//         setGyroscopeControllerDataToBlynk(gyroscopeController);
+//     }
+// }
 
 void InternetConnection::checkSirenAlarm()
 {
     if (sirenAlarm)
     {
-        sirenController.runSiren();
+        //sirenController.runSiren();
         printlnToTerminal("Siréna spuštěna");
     }
 }
@@ -547,37 +547,37 @@ void InternetConnection::alarmMagneticController(MagneticLockController magnetic
     }
 }
 
-void InternetConnection::alarmGyroscopeController(GyroscopeController gyroscopeController)
-{
-    if (!alarmIsEnabled)
-    {
-        return;
-    }
+// void InternetConnection::alarmGyroscopeController(GyroscopeController gyroscopeController)
+// {
+//     if (!alarmIsEnabled)
+//     {
+//         return;
+//     }
 
-    Serial.println("\n!!! Gyroscope alarm !!!\n");
+//     Serial.println("\n!!! Gyroscope alarm !!!\n");
 
-    if (!Blynk.connected())
-    {
-        initializeConnection();
-    }
+//     if (!Blynk.connected())
+//     {
+//         initializeConnection();
+//     }
 
-    if (Blynk.connected())
-    {
-        setGyroscopeControllerDataToBlynk(gyroscopeController);
+//     if (Blynk.connected())
+//     {
+//         setGyroscopeControllerDataToBlynk(gyroscopeController);
 
-        if (alarmEnabledNotifications)
-        {
-            Blynk.notify("! ALARM ! Gyroskop není ve správné poloze: " + gyroscopeController.getAlarmMessage());
-        }
-    }
-    else
-    {
-        // TODO: No Blynk connection, try send SMS or call?
-        // res = modem.sendSMS(SMS_TARGET, String("Hello from ") + imei);
-        // res = modem.callNumber(CALL_TARGET);
-        Serial.println("ALARM but can't connected to Blynk");
-    }
-}
+//         if (alarmEnabledNotifications)
+//         {
+//             Blynk.notify("! ALARM ! Gyroskop není ve správné poloze: " + gyroscopeController.getAlarmMessage());
+//         }
+//     }
+//     else
+//     {
+//         // TODO: No Blynk connection, try send SMS or call?
+//         // res = modem.sendSMS(SMS_TARGET, String("Hello from ") + imei);
+//         // res = modem.callNumber(CALL_TARGET);
+//         Serial.println("ALARM but can't connected to Blynk");
+//     }
+// }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// OTA SECTION
@@ -678,6 +678,6 @@ void InternetConnection::setMicrophoneGain()
     if (modemReady)
     {
         // https://github.com/sui77/rotary-sim800/wiki/SW_ATCommands#atcmic---microphone-gain-setting
-        modem.sendAT(GF("+CMIC=0,"), microphoneGain);
+        //modem.sendAT(GF("+CMIC=0,"), microphoneGain);
     }
 }

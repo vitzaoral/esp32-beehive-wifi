@@ -12,18 +12,18 @@
 InternetConnection connection;
 MeteoData meteoData;
 PowerController powerController;
-GyroscopeController gyroscopeController;
+//GyroscopeController gyroscopeController;
 MagneticLockController magneticLockController;
-SirenController SirenController;
+//SirenController SirenController;
 
 void sendDataToInternet();
-void checkIncomingCall();
-void checkGyroscopeAlarm();
+//void checkIncomingCall();
+//void checkGyroscopeAlarm();
 void checkMagneticLockAlarm();
 
 Ticker timerSendDataToInternet(sendDataToInternet, 288000);  // 4.8 min 288000
-Ticker timerCheckIncomingCall(checkIncomingCall, 5125);      // 5 sec
-Ticker timerGyroscopeAlarm(checkGyroscopeAlarm, 5321);       // 5 sec
+//Ticker timerCheckIncomingCall(checkIncomingCall, 5125);      // 5 sec
+//Ticker timerGyroscopeAlarm(checkGyroscopeAlarm, 5321);       // 5 sec
 Ticker timerMagneticLockAlarm(checkMagneticLockAlarm, 4321); // 4 sec
 
 // alarm section
@@ -47,15 +47,15 @@ void setup()
   connection.initialize();
 
   timerSendDataToInternet.start();
-  timerCheckIncomingCall.start();
-  timerGyroscopeAlarm.start();
+  //timerCheckIncomingCall.start();
+  //timerGyroscopeAlarm.start();
   timerMagneticLockAlarm.start();
   timerSendDataToBlynkIfAlarm.start();
 
   meteoData.initializeSensors();
 
   // set first data for gyroscope and magnetic locks, other in timers..
-  gyroscopeController.setData();
+  //gyroscopeController.setData();
   magneticLockController.setData();
   Serial.println("Setup done, send first data");
   sendDataToInternet();
@@ -65,8 +65,8 @@ void setup()
 void loop()
 {
   timerSendDataToInternet.update();
-  timerCheckIncomingCall.update();
-  timerGyroscopeAlarm.update();
+  //timerCheckIncomingCall.update();
+  //timerGyroscopeAlarm.update();
   timerMagneticLockAlarm.update();
   timerSendDataToBlynkIfAlarm.update();
 
@@ -90,7 +90,7 @@ void sendDataToInternet()
 
     Serial.println("Sending data to Blynk");
     connection.setMicrophoneGain();
-    connection.sendDataToBlynk(meteoData, powerController, gyroscopeController, magneticLockController);
+    connection.sendDataToBlynk(meteoData, powerController, magneticLockController);
     connection.checkNewVersionAndUpdate();
     connection.disconnect();
   }
@@ -101,24 +101,24 @@ void sendDataToInternet()
   }
 }
 
-void checkGyroscopeAlarm()
-{
-  gyroscopeController.setData();
-  if (gyroscopeController.isOk())
-  {
-    // update blynk data and turn alarm off
-    if (connection.isAlarm)
-    {
-      connection.setGyroscopeControllerDataToBlynkIfAlarm(gyroscopeController);
-    }
-    connection.isAlarm = false;
-  }
-  else
-  {
-    connection.isAlarm = true;
-    connection.alarmGyroscopeController(gyroscopeController);
-  }
-}
+// void checkGyroscopeAlarm()
+// {
+//   gyroscopeController.setData();
+//   if (gyroscopeController.isOk())
+//   {
+//     // update blynk data and turn alarm off
+//     if (connection.isAlarm)
+//     {
+//       connection.setGyroscopeControllerDataToBlynkIfAlarm(gyroscopeController);
+//     }
+//     connection.isAlarm = false;
+//   }
+//   else
+//   {
+//     connection.isAlarm = true;
+//     connection.alarmGyroscopeController(gyroscopeController);
+//   }
+// }
 
 void checkMagneticLockAlarm()
 {
@@ -142,6 +142,6 @@ void checkMagneticLockAlarm()
 void sendDataToBlynkIfAlarm()
 {
   connection.setMagneticLockControllerDataToBlynkIfAlarm(magneticLockController);
-  connection.setGyroscopeControllerDataToBlynkIfAlarm(gyroscopeController);
-  connection.checkSirenAlarm();
+  //connection.setGyroscopeControllerDataToBlynkIfAlarm(gyroscopeController);
+  //connection.checkSirenAlarm();
 }

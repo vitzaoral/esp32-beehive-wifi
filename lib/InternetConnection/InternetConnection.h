@@ -31,12 +31,12 @@ public:
   void checkIncomingCall();
   bool initializeConnection();
   void disconnect();
-  void sendDataToBlynk(MeteoData, PowerController, GyroscopeController, MagneticLockController);
+  void sendDataToBlynk(MeteoData, PowerController, MagneticLockController);
   void alarmMagneticController(MagneticLockController);
-  void alarmGyroscopeController(GyroscopeController);
+  //void alarmGyroscopeController(GyroscopeController);
   void blynkRunIfAlarm();
   void setMagneticLockControllerDataToBlynkIfAlarm(MagneticLockController);
-  void setGyroscopeControllerDataToBlynkIfAlarm(GyroscopeController);
+  //void setGyroscopeControllerDataToBlynkIfAlarm(GyroscopeController);
   void checkNewVersionAndUpdate();
   void printlnToTerminal(String);
   void checkSirenAlarm();
@@ -45,7 +45,7 @@ public:
 private:
   void restartModem();
   void setMagneticLockControllerDataToBlynk(MagneticLockController);
-  void setGyroscopeControllerDataToBlynk(GyroscopeController);
+  //void setGyroscopeControllerDataToBlynk(GyroscopeController);
   void setAlarmInfoToBlynk();
   void getSignalQualityDescription(int, int);
   void processIncomingCall();

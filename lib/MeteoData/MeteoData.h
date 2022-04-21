@@ -20,9 +20,9 @@ struct TempAndHumidity
 class MeteoData
 {
   public:
-    TempAndHumidity sensorA;
-    TempAndHumidity sensorB;
-    TempAndHumidity sensorC;
+    // TempAndHumidity sensorA;
+    // TempAndHumidity sensorB;
+    // TempAndHumidity sensorC;
     TempAndHumidity sensorOutdoor;
     MeteoData();
     void initializeSensors();
