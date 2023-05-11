@@ -1,6 +1,9 @@
 # ESP32 beehive (WiFi version)
 Beehives online monitoring based on the ESP32 and others sensors. WiFi version.
 
+## 🚀 12.2022 - UPDATE TO BLYNK 2.0 🚀
+Project was updated to the new version of [Blynk 2.0](https://docs.blynk.io/en/)
+
 > To build a project, you need to download all the necessary libraries and create the *settings.cpp* file in the *src* folder:
 ```c++
 // Project settings
@@ -11,12 +14,10 @@ struct Settings
     const char *wifiSSID = "YYY";
     const char *wifiPassword = "ZZZ";
     const char *imageUploadScriptUrl = "http://example.com/upload.php";
-    const char *version = "1.0.0";
-    const char *firmwareVersionUrl = "http://example.com/version.txt";
-    const char *firmwareBinUrl = "http://example.com/firmware.bin";
-    IPAddress ip = IPAddress(192, 168, 43, 223);
-    IPAddress gateway = IPAddress(192, 168, 43, 1);
-    IPAddress subnet = IPAddress(255, 255, 255, 0);
+    const char *version = "2.0.0";
+    // IPAddress ip = IPAddress(192, 168, 43, 223);
+    // IPAddress gateway = IPAddress(192, 168, 43, 1);
+    // IPAddress subnet = IPAddress(255, 255, 255, 0);
 };
 ```
 ### Features
